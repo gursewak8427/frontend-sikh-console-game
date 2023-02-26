@@ -17,6 +17,7 @@ const ListQuestions = () => {
     currentPage: 1,
     categoryList: [],
     activeCategory: null,
+    activeCategoryIndex: 0,
     activeQuestionId: null,
     showPopup: false,
     changeCategoryWait: false,
@@ -67,6 +68,7 @@ const ListQuestions = () => {
               categoryList: res?.data?.details.user?.assigned_category_id || [],
               activeCategory:
                 res?.data?.details.user?.assigned_category_id[0] || null,
+              activeCategoryIndex: 0,
               isWaiting: false,
               questions: questionResponse.data.details.list,
             });
@@ -82,7 +84,7 @@ const ListQuestions = () => {
     // getPaginationData(1);
   }, []);
 
-  const changeCategory = (category) => {
+  const changeCategory = (category, index) => {
     setState({
       ...state,
       changeCategoryWait: true,
@@ -99,6 +101,7 @@ const ListQuestions = () => {
         setState({
           ...state,
           activeCategory: category || null,
+          activeCategoryIndex: index,
           questions: questionResponse.data.details.list,
           changeCategoryWait: false,
         });
@@ -138,7 +141,7 @@ const ListQuestions = () => {
           <div className="category-list">
             {state.categoryList.map((category, index) => (
               <div
-                onClick={() => changeCategory(category)}
+                onClick={() => changeCategory(category, index)}
                 className={`category-box ${
                   category._id == state.activeCategory._id && "active"
                 }`}
@@ -154,7 +157,9 @@ const ListQuestions = () => {
             <>
               <div
                 className="title-row"
-                style={{ background: colors[1 % colors.length] }}
+                style={{
+                  background: colors[state.activeCategoryIndex % colors.length],
+                }}
               >
                 <h1>{state.activeCategory.categoryName}</h1>
               </div>
@@ -370,7 +375,7 @@ const AddQuestionPopups = ({
             ...state,
             questions: [...state.questions, res.data.details.questionDtl],
           });
-        } else { 
+        } else {
           // update existing question
           let findIndex = -1;
           let newQuestionList = state.questions.map((question, index) => {

@@ -21,7 +21,7 @@
 }
 
 .questionListPage .category-list .category-box.active {
-    border-bottom: 5px solid white;
+    /* border-bottom: 5px solid white; */
 }
 
 .questionListPage .title-row {
