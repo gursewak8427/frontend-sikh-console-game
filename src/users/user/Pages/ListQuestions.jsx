@@ -97,6 +97,24 @@ const ListQuestions = () => {
       });
 
     // getPaginationData(1);
+
+    const handleTabClose = (event) => {
+      event.preventDefault();
+
+      console.log("beforeunload event triggered");
+      setState({
+        ...state,
+        activeQuestionId: null,
+        showPopup: false,
+      });
+      return false;
+    };
+
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
   }, []);
 
   const changeCategory = (category, index) => {
