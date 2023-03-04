@@ -483,27 +483,6 @@ const AddQuestionPopups = ({
           <>
             <div className="top">
               <div className="left">
-                <select
-                  name="question_level"
-                  id="question_level"
-                  className="border-2 border-black rounded p-2"
-                  onChange={handleChange}
-                  value={subState.question_level}
-                >
-                  <option value="EASY">Easy</option>
-                  <option value="MEDIUM">Medium</option>
-                  <option value="HARD">Hard</option>
-                  <option value="EXPERT">Expert</option>
-                </select>
-              </div>
-              <div className="right">
-                <div className="close" onClick={setShowPopup}>
-                  X
-                </div>
-              </div>
-            </div>
-            <div className="top">
-              <div className="left">
                 <div
                   className={`language ${
                     subState.questionType == 1 && "active"
@@ -521,11 +500,11 @@ const AddQuestionPopups = ({
                   English
                 </div>
               </div>
-              {/* <div className="right">
+              <div className="right">
                 <div className="close" onClick={setShowPopup}>
                   X
                 </div>
-              </div> */}
+              </div>
             </div>
             {subState.questionType === 1 && (
               <div className="punjabi-box">
@@ -591,12 +570,34 @@ const AddQuestionPopups = ({
                       Update
                     </button>
                   ) : (
-                    <button
-                      className="add-question-popup-button-submit upload"
-                      onClick={handleSubmit}
-                    >
-                      Add
-                    </button>
+                    <div className="flex justify-end">
+                      <select
+                        name="question_level"
+                        id="question_level"
+                        className={`border-2 border-black rounded p-2 mr-10`}
+                        onChange={handleChange}
+                        value={subState.question_level}
+                      >
+                        <option value="EASY" className={"easy-color"}>
+                          Easy
+                        </option>
+                        <option value="MEDIUM" className={"medium-color"}>
+                          Medium
+                        </option>
+                        <option value="HARD" className={"hard-color"}>
+                          Hard
+                        </option>
+                        <option value="EXPERT" className={"expert-color"}>
+                          Expert
+                        </option>
+                      </select>
+                      <button
+                        className="add-question-popup-button-submit upload"
+                        onClick={handleSubmit}
+                      >
+                        Add
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
