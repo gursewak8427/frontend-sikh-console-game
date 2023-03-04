@@ -48,6 +48,17 @@ const ListQuestions = () => {
 
   const config = { headers: { Authorization: `Bearer ${state.userToken}` } };
 
+  // useEffect(() => {
+  //   window.onpopstate = () => {
+  //     if (state.isWaiting) {
+  //       setState({
+  //       ...state,
+  //         isWaiting: false,
+  //       });
+  //     }
+  //   };
+  // })
+
   useEffect(() => {
     // get Categories
     axios
@@ -468,6 +479,7 @@ const AddQuestionPopups = ({
             {/* <p>{notification?.body}</p> */}
           </div>
         );
+        setShowPopup();
       })
       .catch((err) => {
         console.log(err);
