@@ -219,21 +219,21 @@ const ListQuestions = () => {
                           <td onClick={() => editQuestion(question)}>
                             {question.e_question}
                             <br />
-                            <span className="punjabi-font">
+                            <span className="punjabi-font blue-font">
                               {question.p_question}
                             </span>
                           </td>
                           <td className="right-color">
                             {question.e_rightAnswer}
                             <br />
-                            <span className="punjabi-font">
+                            <span className="punjabi-font blue-font">
                               {question.p_rightAnswer}
                             </span>
                           </td>
                           <td className="wrong-color">
                             {question.e_wrongAnswer}
                             <br />
-                            <span className="punjabi-font">
+                            <span className="punjabi-font blue-font">
                               {question.p_wrongAnswer}
                             </span>
                           </td>

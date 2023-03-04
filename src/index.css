@@ -18,6 +18,9 @@
   font-size: 19px;
 }
 
+.blue-font {
+  color: blue;
+}
 
 .lll:hover {
   color: red;
