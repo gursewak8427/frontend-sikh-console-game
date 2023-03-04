@@ -83,22 +83,32 @@ const AdminListQuestions = () => {
                                     {question.e_question}
                                   </span>
                                 </td>
-                                <td className="align-middle">
+                                <td className="align-middle rightAnswer">
                                   <span className="text-secondary font-weight-bold">
                                     {question.p_rightAnswer}
                                     <br />
                                     {question.e_rightAnswer}
                                   </span>
                                 </td>
-                                <td className="align-middle">
+                                <td className="align-middle wrongAnswer">
                                   <span className="text-secondary font-weight-bold">
                                     {question.p_wrongAnswer}
                                     <br />
                                     {question.e_wrongAnswer}
                                   </span>
                                 </td>
-                                <td className="align-middle">
-                                    {question.question_level}
+                                <td
+                                  className={`align-middle ${
+                                    question.question_level == "EASY"
+                                      ? "easy"
+                                      : question.question_level == "MEDIUM"
+                                      ? "medium"
+                                      : question.question_level == "HARD"
+                                      ? "hard"
+                                      : "expert"
+                                  }`}
+                                >
+                                  {question.question_level}
                                 </td>
                                 <td className="">
                                   <span className="text-sm text-secondary font-weight-bold text-[green]">

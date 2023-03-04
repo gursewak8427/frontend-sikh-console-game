@@ -52,13 +52,13 @@ const UserHeader = () => {
       label: "Questions",
       icon: <i class="fa-solid fa-school"></i>,
       items: [
+        // {
+        //   label: "Create",
+        //   icon: <i class="fa-solid fa-earth-americas"></i>,
+        //   path: "/d/user/addquestion",
+        // },
         {
           label: "Create",
-          icon: <i class="fa-solid fa-earth-americas"></i>,
-          path: "/d/user/addquestion",
-        },
-        {
-          label: "List",
           icon: <i class="fa-solid fa-school-lock"></i>,
           path: "/d/user/questions",
         },

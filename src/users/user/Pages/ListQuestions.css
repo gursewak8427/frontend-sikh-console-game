@@ -42,9 +42,9 @@
 
 /* freeze first row */
 .freeze.top {
-    /* position: sticky;
+    position: sticky;
     top: 0;
-    left: 0; */
+    left: 0;
 }
 
 
@@ -97,7 +97,37 @@
 }
 
 .questionListPage .main-list tr:nth-child(even) {
-    background: #DAB2A1;
+    background: #d7d5d5;
+}
+
+.questionListPage .main-list tr .right-color {
+    background: #b6dbb6;
+}
+
+.questionListPage .main-list tr:nth-child(even) .right-color {
+    background: #8fbb8f;
+}
+
+
+.questionListPage .main-list tr .wrong-color {
+    background: #f5a2a2;
+}
+
+.questionListPage .main-list tr:nth-child(even) .wrong-color {
+    background: #b37e7e;
+}
+
+.easy-color{
+    background: rgb(59 130 246 / 50%);
+}
+.medium-color{
+    background: #e7f5bb;
+}
+.hard-color{
+    background: orange;
+}
+.expert-color{
+    background: #cd82cb;
 }
 
 .questionListPage .addNewQuestionBtn {

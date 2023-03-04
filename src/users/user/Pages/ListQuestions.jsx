@@ -167,7 +167,7 @@ const ListQuestions = () => {
               >
                 <h1>{state.activeCategory.categoryName}</h1>
               </div>
-              <div className="main-list overflow-x-auto">
+              <div className="main-list">
                 <table className="table table-responsive w-full">
                   <thead>
                     <tr className="freeze top">
@@ -192,17 +192,29 @@ const ListQuestions = () => {
                             <br />
                             {question.p_question}
                           </td>
-                          <td>
+                          <td className="right-color">
                             {question.e_rightAnswer}
                             <br />
                             {question.p_rightAnswer}
                           </td>
-                          <td>
+                          <td className="wrong-color">
                             {question.e_wrongAnswer}
                             <br />
                             {question.p_wrongAnswer}
                           </td>
-                          <td>{question.question_level}</td>
+                          <td
+                            className={`${
+                              question.question_level == "EASY"
+                                ? "easy-color"
+                                : question.question_level == "MEDIUM"
+                                ? "medium-color"
+                                : question.question_level == "HARD"
+                                ? "hard-color"
+                                : "expert-color"
+                            }`}
+                          >
+                            {question.question_level}
+                          </td>
                         </tr>
                       </>
                     ))}
