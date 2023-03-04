@@ -95,26 +95,6 @@ const ListQuestions = () => {
       .catch((err) => {
         console.log(err);
       });
-
-    // getPaginationData(1);
-
-    const handleTabClose = (event) => {
-      event.preventDefault();
-
-      console.log("beforeunload event triggered");
-      setState({
-        ...state,
-        activeQuestionId: null,
-        showPopup: false,
-      });
-      return false;
-    };
-
-    window.addEventListener("beforeunload", handleTabClose);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleTabClose);
-    };
   }, []);
 
   const changeCategory = (category, index) => {
@@ -463,6 +443,8 @@ const AddQuestionPopups = ({
           setState({
             ...state,
             questions: [...state.questions, res.data.details.questionDtl],
+            activeQuestionId: null,
+            showPopup: false,
           });
         } else {
           // update existing question
@@ -477,6 +459,8 @@ const AddQuestionPopups = ({
           setState({
             ...state,
             questions: newQuestionList,
+            activeQuestionId: null,
+            showPopup: false,
           });
         }
         // update question list  ==================
@@ -497,7 +481,6 @@ const AddQuestionPopups = ({
             {/* <p>{notification?.body}</p> */}
           </div>
         );
-        setShowPopup();
       })
       .catch((err) => {
         console.log(err);

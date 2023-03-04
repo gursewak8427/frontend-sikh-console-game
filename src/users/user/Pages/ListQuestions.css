@@ -217,8 +217,8 @@
     margin-bottom: 10px;
     margin-right: 10px;
 }
-
-.add-question-popup .top .right .close {
+.close {
+    right: 20px;
     width: 35px;
     height: 35px;
     background: red;
