@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <input type="text" id="string" placeholder="Type Here in Punjabi">
+    <button id="submit">Submit</button>
+    <p id="result"></p>
+    <script src="font.js"></script>
+    <script>
+        document.getElementById("submit").addEventListener("click", () => {
+            let value = document.getElementById("string").value
+            let result = PunjabiFontConvertor.convert(value, "AnmolLipi", "Arial Unicode MS")
+            document.getElementById("result").innerText = result
+        })
+    </script>
+</body>
+
+</html>

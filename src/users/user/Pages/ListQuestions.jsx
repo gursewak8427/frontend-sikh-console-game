@@ -7,6 +7,8 @@ import { authenticate, getToken } from "../../../helper/auth";
 import UserDashboard from "../Screens/Dashboard/UserDashboard";
 import "./ListQuestions.css";
 
+import { PunjabiFontConvertor } from "../../../helper/font";
+
 const ListQuestions = () => {
   const navigate = useNavigate();
   const [state, setState] = useState({
@@ -53,6 +55,7 @@ const ListQuestions = () => {
       .then((res) => {
         // get Question According to Category Id
         // findQuestionsAccordingToQuery
+
         axios
           .post(
             process.env.REACT_APP_NODE_URL +
@@ -76,6 +79,7 @@ const ListQuestions = () => {
           .catch((err) => {
             console.log(err);
           });
+        // console.log(questionResponse.data.details.list);
       })
       .catch((err) => {
         console.log(err);
@@ -163,10 +167,11 @@ const ListQuestions = () => {
               >
                 <h1>{state.activeCategory.categoryName}</h1>
               </div>
-              <div className="main-list">
-                <table className="table table-responsive">
+              <div className="main-list overflow-x-auto">
+                <table className="table table-responsive w-full">
                   <thead>
-                    <tr>
+                    <tr className="freeze top">
+                      <th className="sr">Sr</th>
                       <th>Question</th>
                       <th>
                         Right <br /> Answer
@@ -174,12 +179,14 @@ const ListQuestions = () => {
                       <th>
                         Wrong <br /> Answer
                       </th>
+                      <th>Level</th>
                     </tr>
                   </thead>
                   <tbody>
                     {state.questions.map((question, index) => (
                       <>
                         <tr key={index}>
+                          <td className="sr">{index + 1}</td>
                           <td onClick={() => editQuestion(question)}>
                             {question.e_question}
                             <br />
@@ -195,6 +202,7 @@ const ListQuestions = () => {
                             <br />
                             {question.p_wrongAnswer}
                           </td>
+                          <td>{question.question_level}</td>
                         </tr>
                       </>
                     ))}
@@ -311,6 +319,8 @@ const AddQuestionPopups = ({
     p_rightAnswer: "",
     questionId: questionId,
     questionType: 1, // 1 for punjabi and 2 for english
+    loadingData: true,
+    question_level: "EASY", // Easy, Medium, Hard and Expert
   });
 
   useEffect(() => {
@@ -326,22 +336,38 @@ const AddQuestionPopups = ({
           console.log({ questionResponse: res });
           setSubState({
             ...subState,
+            loadingData: false,
             e_question: res.data.details.question.e_question,
             e_wrongAnswer: res.data.details.question.e_wrongAnswer,
             e_rightAnswer: res.data.details.question.e_rightAnswer,
             p_question: res.data.details.question.p_question,
             p_wrongAnswer: res.data.details.question.p_wrongAnswer,
             p_rightAnswer: res.data.details.question.p_rightAnswer,
+            question_level: res.data.details.question.question_level || "Easy",
           });
         });
+    } else {
+      setSubState({ ...subState, loadingData: false });
     }
   }, []);
 
   const handleChange = (e) => {
-    setSubState({
-      ...subState,
-      [e.target.name]: e.target.value,
-    });
+    let punjabiArr = [];
+    if (punjabiArr.includes(e.target.name)) {
+      setSubState({
+        ...subState,
+        [e.target.name]: PunjabiFontConvertor.convert(
+          e.target.value,
+          "AnmolLipi",
+          "Arial Unicode MS"
+        ),
+      });
+    } else {
+      setSubState({
+        ...subState,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -350,13 +376,26 @@ const AddQuestionPopups = ({
       headers: { Authorization: `Bearer ${getToken("user")}` },
     };
     let data = {
-      p_question: subState.p_question,
-      p_wrongAnswer: subState.p_wrongAnswer,
-      p_rightAnswer: subState.p_rightAnswer,
+      p_question: PunjabiFontConvertor.convert(
+        subState.p_question,
+        "AnmolLipi",
+        "Arial Unicode MS"
+      ),
+      p_wrongAnswer: PunjabiFontConvertor.convert(
+        subState.p_wrongAnswer,
+        "AnmolLipi",
+        "Arial Unicode MS"
+      ),
+      p_rightAnswer: PunjabiFontConvertor.convert(
+        subState.p_rightAnswer,
+        "AnmolLipi",
+        "Arial Unicode MS"
+      ),
       e_question: subState.e_question,
       e_wrongAnswer: subState.e_wrongAnswer,
       e_rightAnswer: subState.e_rightAnswer,
       questionType: subState.questionType,
+      question_level: subState.question_level,
       questionId: subState.questionId,
       category: category._id,
     };
@@ -417,168 +456,199 @@ const AddQuestionPopups = ({
   return (
     <div className="add-question-popup">
       <div className="add-question-popup-content">
-        <div className="top">
-          <div className="left">
-            <div
-              className={`language ${subState.questionType == 1 && "active"}`}
-              onClick={() => setSubState({ ...subState, questionType: 1 })}
-            >
-              Punjabi
-            </div>
-            <div
-              className={`language ${subState.questionType == 2 && "active"}`}
-              onClick={() => setSubState({ ...subState, questionType: 2 })}
-            >
-              English
-            </div>
-          </div>
-          <div className="right">
-            <div className="close" onClick={setShowPopup}>
-              X
-            </div>
-          </div>
-        </div>
-        {subState.questionType === 1 && (
-          <div className="punjabi-box">
-            <div className="simulator simulator-punjabi">
-              <div className="question-row">{subState.p_question}</div>
-              <div className="answer-row">
-                <div className="left">
-                  {subState.p_rightAnswer.length > 15 ? (
-                    <marquee behavior="" direction="">
-                      {subState.p_rightAnswer}
-                    </marquee>
-                  ) : (
-                    subState.p_rightAnswer
-                  )}
-                </div>
-                <div className="right">
-                  {subState.p_wrongAnswer.length > 15 ? (
-                    <marquee behavior="" direction="">
-                      {subState.p_wrongAnswer}
-                    </marquee>
-                  ) : (
-                    subState.p_wrongAnswer
-                  )}
+        {subState.loadingData ? (
+          <>Loading...</>
+        ) : (
+          <>
+            <div className="top">
+              <div className="left">
+                <select
+                  name="question_level"
+                  id="question_level"
+                  className="border-2 border-black rounded p-2"
+                  onChange={handleChange}
+                  value={subState.question_level}
+                >
+                  <option value="EASY">Easy</option>
+                  <option value="MEDIUM">Medium</option>
+                  <option value="HARD">Hard</option>
+                  <option value="EXPERT">Expert</option>
+                </select>
+              </div>
+              <div className="right">
+                <div className="close" onClick={setShowPopup}>
+                  X
                 </div>
               </div>
             </div>
-            <div className="add-question-popup-input">
-              <label>Punjabi Question</label>
-              <input
-                type="text"
-                name="p_question"
-                value={subState.p_question}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="add-question-popup-input">
-              <label>Right Answer</label>
-              <input
-                type="text"
-                name="p_rightAnswer"
-                value={subState.p_rightAnswer}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="add-question-popup-input">
-              <label>Wrong Answer</label>
-              <input
-                type="text"
-                name="p_wrongAnswer"
-                value={subState.p_wrongAnswer}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="add-question-popup-button">
-              {subState.questionId != null ? (
-                <button
-                  className="add-question-popup-button-submit update"
-                  onClick={handleSubmit}
+            <div className="top">
+              <div className="left">
+                <div
+                  className={`language ${
+                    subState.questionType == 1 && "active"
+                  }`}
+                  onClick={() => setSubState({ ...subState, questionType: 1 })}
                 >
-                  Update
-                </button>
-              ) : (
-                <button
-                  className="add-question-popup-button-submit upload"
-                  onClick={handleSubmit}
-                >
-                  Add
-                </button>
-              )}
-            </div>
-          </div>
-        )}
-        {subState.questionType === 2 && (
-          <div className="english-box">
-            <div className="simulator simulator-english">
-              <div className="question-row">{subState.e_question}</div>
-              <div className="answer-row">
-                <div className="left">
-                  {subState.e_rightAnswer.length > 15 ? (
-                    <marquee behavior="" direction="">
-                      {subState.e_rightAnswer}
-                    </marquee>
-                  ) : (
-                    subState.e_rightAnswer
-                  )}
+                  Punjabi
                 </div>
-                <div className="right">
-                  {subState.e_wrongAnswer.length > 15 ? (
-                    <marquee behavior="" direction="">
-                      {subState.e_wrongAnswer}
-                    </marquee>
+                <div
+                  className={`language ${
+                    subState.questionType == 2 && "active"
+                  }`}
+                  onClick={() => setSubState({ ...subState, questionType: 2 })}
+                >
+                  English
+                </div>
+              </div>
+              {/* <div className="right">
+                <div className="close" onClick={setShowPopup}>
+                  X
+                </div>
+              </div> */}
+            </div>
+            {subState.questionType === 1 && (
+              <div className="punjabi-box">
+                <div className="simulator simulator-punjabi">
+                  <div className="question-row">{subState.p_question}</div>
+                  <div className="answer-row">
+                    <div className="left">
+                      {subState.p_rightAnswer.length > 15 ? (
+                        <marquee behavior="" direction="">
+                          {subState.p_rightAnswer}
+                        </marquee>
+                      ) : (
+                        subState.p_rightAnswer
+                      )}
+                    </div>
+                    <div className="right">
+                      {subState.p_wrongAnswer.length > 15 ? (
+                        <marquee behavior="" direction="">
+                          {subState.p_wrongAnswer}
+                        </marquee>
+                      ) : (
+                        subState.p_wrongAnswer
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="add-question-popup-input">
+                  <label>Punjabi Question</label>
+                  <input
+                    type="text"
+                    name="p_question"
+                    value={subState.p_question}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="add-question-popup-input right">
+                  <label>Right Answer</label>
+                  <input
+                    type="text"
+                    name="p_rightAnswer"
+                    value={subState.p_rightAnswer}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="add-question-popup-input wrong">
+                  <label>Wrong Answer</label>
+                  <input
+                    type="text"
+                    name="p_wrongAnswer"
+                    value={subState.p_wrongAnswer}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="add-question-popup-button">
+                  {subState.questionId != null ? (
+                    <button
+                      className="add-question-popup-button-submit update"
+                      onClick={handleSubmit}
+                    >
+                      Update
+                    </button>
                   ) : (
-                    subState.e_wrongAnswer
+                    <button
+                      className="add-question-popup-button-submit upload"
+                      onClick={handleSubmit}
+                    >
+                      Add
+                    </button>
                   )}
                 </div>
               </div>
-            </div>
-            <div className="add-question-popup-input">
-              <label>English Question</label>
-              <input
-                type="text"
-                name="e_question"
-                value={subState.e_question}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="add-question-popup-input">
-              <label>Right Answer</label>
-              <input
-                type="text"
-                name="e_rightAnswer"
-                value={subState.e_rightAnswer}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="add-question-popup-input">
-              <label>Wrong Answer</label>
-              <input
-                type="text"
-                name="e_wrongAnswer"
-                value={subState.e_wrongAnswer}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="add-question-popup-button">
-              {subState.questionId != null ? (
-                <button
-                  className="add-question-popup-button-submit update"
-                  onClick={handleSubmit}
-                >
-                  Update
-                </button>
-              ) : (
-                <button
-                  className="add-question-popup-button-submit upload"
-                  onClick={handleSubmit}
-                >
-                  Add
-                </button>
-              )}
-            </div>
-          </div>
+            )}
+            {subState.questionType === 2 && (
+              <div className="english-box">
+                <div className="simulator simulator-english">
+                  <div className="question-row">{subState.e_question}</div>
+                  <div className="answer-row">
+                    <div className="left">
+                      {subState.e_rightAnswer.length > 15 ? (
+                        <marquee behavior="" direction="">
+                          {subState.e_rightAnswer}
+                        </marquee>
+                      ) : (
+                        subState.e_rightAnswer
+                      )}
+                    </div>
+                    <div className="right">
+                      {subState.e_wrongAnswer.length > 15 ? (
+                        <marquee behavior="" direction="">
+                          {subState.e_wrongAnswer}
+                        </marquee>
+                      ) : (
+                        subState.e_wrongAnswer
+                      )}
+                    </div>
+                  </div>
+                </div>
+                <div className="add-question-popup-input">
+                  <label>English Question</label>
+                  <input
+                    type="text"
+                    name="e_question"
+                    value={subState.e_question}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="add-question-popup-input">
+                  <label>Right Answer</label>
+                  <input
+                    type="text"
+                    name="e_rightAnswer"
+                    value={subState.e_rightAnswer}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="add-question-popup-input">
+                  <label>Wrong Answer</label>
+                  <input
+                    type="text"
+                    name="e_wrongAnswer"
+                    value={subState.e_wrongAnswer}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="add-question-popup-button">
+                  {subState.questionId != null ? (
+                    <button
+                      className="add-question-popup-button-submit update"
+                      onClick={handleSubmit}
+                    >
+                      Update
+                    </button>
+                  ) : (
+                    <button
+                      className="add-question-popup-button-submit upload"
+                      onClick={handleSubmit}
+                    >
+                      Add
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

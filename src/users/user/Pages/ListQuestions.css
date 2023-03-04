@@ -36,8 +36,17 @@
 }
 
 .questionListPage .main-list table {
-    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
 }
+
+/* freeze first row */
+.freeze.top {
+    /* position: sticky;
+    top: 0;
+    left: 0; */
+}
+
 
 .questionListPage .main-list tr {
     width: 100% !important;
@@ -45,7 +54,12 @@
 
 .questionListPage .main-list td,
 .questionListPage .main-list th {
-    text-align: center;
+    text-align: left !important;
+}
+
+.questionListPage .main-list th.sr,
+.questionListPage .main-list td.sr {
+    width: 50px !important;
 }
 
 .questionListPage .main-list th {
@@ -150,8 +164,9 @@
 }
 
 .add-question-popup .top .left .language.active {
-    background: black;
-    color: white;
+    background: rgb(21, 200, 146);
+    border-color: transparent;
+    color: black;
 }
 
 .add-question-popup .top .left .language {
@@ -159,13 +174,15 @@
     border: 1px solid black;
     color: black;
     font-weight: bolder;
-    margin: 5px;
     padding: 10px 20px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }
 
 .add-question-popup .top .right .close {
@@ -181,6 +198,7 @@
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
+
 }
 
 .add-question-popup .add-question-popup-input {
@@ -188,6 +206,26 @@
     padding: 10px;
     flex-direction: column;
     display: flex;
+}
+
+.add-question-popup .add-question-popup-input.right label {
+    color: green !important;
+}
+
+.add-question-popup .add-question-popup-input.right input {
+    border-color: green !important;
+}
+
+.add-question-popup .add-question-popup-input.wrong label {
+    color: red !important;
+}
+
+.add-question-popup select {
+    color: black !important;
+}
+
+.add-question-popup .add-question-popup-input.wrong input {
+    border-color: red !important
 }
 
 .add-question-popup .add-question-popup-input label {
@@ -249,6 +287,7 @@
     height: 200px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 24px;
+    overflow: hidden;
 }
 
 .add-question-popup .simulator .question-row {
