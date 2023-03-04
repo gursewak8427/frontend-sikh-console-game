@@ -591,18 +591,56 @@ const AddQuestionPopups = ({
                 </div>
                 <div className="add-question-popup-button">
                   {subState.questionId != null ? (
-                    <button
-                      className="add-question-popup-button-submit update"
-                      onClick={handleSubmit}
-                    >
-                      Update
-                    </button>
+                    <div className="flex justify-end">
+                      <select
+                        name="question_level"
+                        id="question_level"
+                        className={`border-2 border-black rounded p-2 mr-10 ${
+                          subState.question_level == "EASY"
+                            ? "easy-color"
+                            : subState.question_level == "MEDIUM"
+                            ? "medium-color"
+                            : subState.question_level == "HARD"
+                            ? "hard-color"
+                            : "expert-color"
+                        }`}
+                        onChange={handleChange}
+                        value={subState.question_level}
+                      >
+                        <option value="EASY" className={"easy-color"}>
+                          Easy
+                        </option>
+                        <option value="MEDIUM" className={"medium-color"}>
+                          Medium
+                        </option>
+                        <option value="HARD" className={"hard-color"}>
+                          Hard
+                        </option>
+                        <option value="EXPERT" className={"expert-color"}>
+                          Expert
+                        </option>
+                      </select>
+                      <button
+                        className="add-question-popup-button-submit update"
+                        onClick={handleSubmit}
+                      >
+                        Update
+                      </button>
+                    </div>
                   ) : (
                     <div className="flex justify-end">
                       <select
                         name="question_level"
                         id="question_level"
-                        className={`border-2 border-black rounded p-2 mr-10`}
+                        className={`border-2 border-black rounded p-2 mr-10 ${
+                          subState.question_level == "EASY"
+                            ? "easy-color"
+                            : subState.question_level == "MEDIUM"
+                            ? "medium-color"
+                            : subState.question_level == "HARD"
+                            ? "hard-color"
+                            : "expert-color"
+                        }`}
                         onChange={handleChange}
                         value={subState.question_level}
                       >
@@ -684,19 +722,79 @@ const AddQuestionPopups = ({
                 </div>
                 <div className="add-question-popup-button">
                   {subState.questionId != null ? (
-                    <button
-                      className="add-question-popup-button-submit update"
-                      onClick={handleSubmit}
-                    >
-                      Update
-                    </button>
+                    <div className="flex justify-end">
+                      <select
+                        name="question_level"
+                        id="question_level"
+                        className={`border-2 border-black rounded p-2 mr-10 ${
+                          subState.question_level == "EASY"
+                            ? "easy-color"
+                            : subState.question_level == "MEDIUM"
+                            ? "medium-color"
+                            : subState.question_level == "HARD"
+                            ? "hard-color"
+                            : "expert-color"
+                        }`}
+                        onChange={handleChange}
+                        value={subState.question_level}
+                      >
+                        <option value="EASY" className={"easy-color"}>
+                          Easy
+                        </option>
+                        <option value="MEDIUM" className={"medium-color"}>
+                          Medium
+                        </option>
+                        <option value="HARD" className={"hard-color"}>
+                          Hard
+                        </option>
+                        <option value="EXPERT" className={"expert-color"}>
+                          Expert
+                        </option>
+                      </select>
+                      <button
+                        className="add-question-popup-button-submit update"
+                        onClick={handleSubmit}
+                      >
+                        Update
+                      </button>
+                    </div>
                   ) : (
-                    <button
-                      className="add-question-popup-button-submit upload"
-                      onClick={handleSubmit}
-                    >
-                      Add
-                    </button>
+                    <div className="flex justify-end">
+                      <select
+                        name="question_level"
+                        id="question_level"
+                        className={`border-2 border-black rounded p-2 mr-10 ${
+                          subState.question_level == "EASY"
+                            ? "easy-color"
+                            : subState.question_level == "MEDIUM"
+                            ? "medium-color"
+                            : subState.question_level == "HARD"
+                            ? "hard-color"
+                            : "expert-color"
+                        }`}
+                        onChange={handleChange}
+                        value={subState.question_level}
+                      >
+                        <option value="EASY" className={"easy-color"}>
+                          Easy
+                        </option>
+                        <option value="MEDIUM" className={"medium-color"}>
+                          Medium
+                        </option>
+                        <option value="HARD" className={"hard-color"}>
+                          Hard
+                        </option>
+                        <option value="EXPERT" className={"expert-color"}>
+                          Expert
+                        </option>
+                      </select>
+                      <button
+                        className="add-question-popup-button-submit upload"
+                        onClick={handleSubmit}
+                      >
+                        Add
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
