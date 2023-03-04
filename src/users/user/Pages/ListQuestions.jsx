@@ -509,8 +509,8 @@ const AddQuestionPopups = ({
             {subState.questionType === 1 && (
               <div className="punjabi-box">
                 <div className="simulator simulator-punjabi">
-                  <div className="question-row punjabi-font">
-                    {true
+                  <div className="question-row punjabi-font-please">
+                    {false
                       ? subState.p_question
                       : PunjabiFontConvertor.convert(
                           subState.p_question,
@@ -519,10 +519,10 @@ const AddQuestionPopups = ({
                         )}
                   </div>
                   <div className="answer-row">
-                    <div className="left punjabi-font">
+                    <div className="left punjabi-font-please">
                       {subState.p_rightAnswer.length > 15 ? (
                         <marquee behavior="" direction="">
-                          {true
+                          {false
                             ? subState.p_rightAnswer
                             : PunjabiFontConvertor.convert(
                                 subState.p_rightAnswer,
@@ -531,13 +531,17 @@ const AddQuestionPopups = ({
                               )}
                         </marquee>
                       ) : (
-                        subState.p_rightAnswer
+                        PunjabiFontConvertor.convert(
+                          subState.p_wrongAnswer,
+                          "AnmolLipi",
+                          "Arial Unicode MS"
+                        )
                       )}
                     </div>
-                    <div className="right punjabi-font">
+                    <div className="right punjabi-font-please">
                       {subState.p_wrongAnswer.length > 15 ? (
                         <marquee behavior="" direction="">
-                          {true
+                          {false
                             ? subState.p_wrongAnswer
                             : PunjabiFontConvertor.convert(
                                 subState.p_wrongAnswer,
@@ -546,7 +550,11 @@ const AddQuestionPopups = ({
                               )}
                         </marquee>
                       ) : (
-                        subState.p_wrongAnswer
+                        PunjabiFontConvertor.convert(
+                          subState.p_wrongAnswer,
+                          "AnmolLipi",
+                          "Arial Unicode MS"
+                        )
                       )}
                     </div>
                   </div>
