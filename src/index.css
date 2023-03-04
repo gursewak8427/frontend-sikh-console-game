@@ -8,6 +8,16 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: myFirstFont;
+  src: url(punjabi-font.ttf);
+}
+
+.punjabi-font {
+  font-family: myFirstFont;
+}
+
+
 .lll:hover {
   color: red;
 }
@@ -1242,7 +1252,7 @@ footer {
   }
 
   #aside {
-    position: absolute; 
+    position: absolute;
     transform: translateX(-100%) !important;
     -webkit-transform: translateX(-100%) !important;
     -moz-transform: translateX(-100%) !important;

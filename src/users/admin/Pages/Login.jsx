@@ -109,7 +109,7 @@ const Login = (props) => {
                                     <div className="mt-5 md:col-start-2 md:mt-0 m-auto w-full lg:w-9/12">
                                         <div className="shadow sm:overflow-hidden sm:rounded-md border-2 border-[gray] py-5 bg-white">
                                             <div className="space-y-6 px-4 py-5 sm:p-6">
-                                                <p className="text-center text-gray my-2">An email with a verification code was just send to gu****@gmail.com</p>
+                                                <p className="text-center text-gray my-2">An email with a verification code was just send to progress.****@gmail.com</p>
                                                 <div className="col-span-3 sm:col-span-2">
                                                     <label htmlFor="company-website" className="block text-sm font-medium text-gray-700">
                                                         Code

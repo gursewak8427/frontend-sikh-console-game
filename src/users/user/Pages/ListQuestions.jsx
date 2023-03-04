@@ -190,17 +190,23 @@ const ListQuestions = () => {
                           <td onClick={() => editQuestion(question)}>
                             {question.e_question}
                             <br />
-                            {question.p_question}
+                            <span className="punjabi-font">
+                              {question.p_question}
+                            </span>
                           </td>
                           <td className="right-color">
                             {question.e_rightAnswer}
                             <br />
-                            {question.p_rightAnswer}
+                            <span className="punjabi-font">
+                              {question.p_rightAnswer}
+                            </span>
                           </td>
                           <td className="wrong-color">
                             {question.e_wrongAnswer}
                             <br />
-                            {question.p_wrongAnswer}
+                            <span className="punjabi-font">
+                              {question.p_wrongAnswer}
+                            </span>
                           </td>
                           <td
                             className={`${
@@ -364,7 +370,7 @@ const AddQuestionPopups = ({
   }, []);
 
   const handleChange = (e) => {
-    let punjabiArr = [];
+    let punjabiArr = ["p_question", "p_wrongAnswer", "p_rightAnswer"];
     if (punjabiArr.includes(e.target.name)) {
       setSubState({
         ...subState,
@@ -388,21 +394,24 @@ const AddQuestionPopups = ({
       headers: { Authorization: `Bearer ${getToken("user")}` },
     };
     let data = {
-      p_question: PunjabiFontConvertor.convert(
-        subState.p_question,
-        "AnmolLipi",
-        "Arial Unicode MS"
-      ),
-      p_wrongAnswer: PunjabiFontConvertor.convert(
-        subState.p_wrongAnswer,
-        "AnmolLipi",
-        "Arial Unicode MS"
-      ),
-      p_rightAnswer: PunjabiFontConvertor.convert(
-        subState.p_rightAnswer,
-        "AnmolLipi",
-        "Arial Unicode MS"
-      ),
+      // p_question: PunjabiFontConvertor.convert(
+      //   subState.p_question,
+      //   "AnmolLipi",
+      //   "Arial Unicode MS"
+      // ),
+      // p_wrongAnswer: PunjabiFontConvertor.convert(
+      //   subState.p_wrongAnswer,
+      //   "AnmolLipi",
+      //   "Arial Unicode MS"
+      // ),
+      // p_rightAnswer: PunjabiFontConvertor.convert(
+      //   subState.p_rightAnswer,
+      //   "AnmolLipi",
+      //   "Arial Unicode MS"
+      // ),
+      p_question: subState.p_question,
+      p_wrongAnswer: subState.p_wrongAnswer,
+      p_rightAnswer: subState.p_rightAnswer,
       e_question: subState.e_question,
       e_wrongAnswer: subState.e_wrongAnswer,
       e_rightAnswer: subState.e_rightAnswer,
@@ -520,7 +529,7 @@ const AddQuestionPopups = ({
             </div>
             {subState.questionType === 1 && (
               <div className="punjabi-box">
-                <div className="simulator simulator-punjabi">
+                <div className="simulator simulator-punjabi punjabi-font">
                   <div className="question-row">{subState.p_question}</div>
                   <div className="answer-row">
                     <div className="left">
@@ -550,6 +559,7 @@ const AddQuestionPopups = ({
                     name="p_question"
                     value={subState.p_question}
                     onChange={handleChange}
+                    className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-input right">
@@ -559,6 +569,7 @@ const AddQuestionPopups = ({
                     name="p_rightAnswer"
                     value={subState.p_rightAnswer}
                     onChange={handleChange}
+                    className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-input wrong">
@@ -568,6 +579,7 @@ const AddQuestionPopups = ({
                     name="p_wrongAnswer"
                     value={subState.p_wrongAnswer}
                     onChange={handleChange}
+                    className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-button">

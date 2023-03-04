@@ -78,21 +78,28 @@ const AdminListQuestions = () => {
                                 </td>
                                 <td className="align-middle">
                                   <span className="text-secondary font-weight-bold">
-                                    {question.p_question}
+                                    <span className="punjabi-font">
+                                      {question.p_question}
+                                    </span>
                                     <br />
                                     {question.e_question}
                                   </span>
                                 </td>
                                 <td className="align-middle rightAnswer">
                                   <span className="text-secondary font-weight-bold">
-                                    {question.p_rightAnswer}
+                                    <span className="punjabi-font">
+                                      {question.p_rightAnswer}
+                                    </span>
                                     <br />
                                     {question.e_rightAnswer}
                                   </span>
                                 </td>
                                 <td className="align-middle wrongAnswer">
                                   <span className="text-secondary font-weight-bold">
-                                    {question.p_wrongAnswer}
+                                    <span className="punjabi-font">
+                                      {question.p_wrongAnswer}
+                                    </span>
+
                                     <br />
                                     {question.e_wrongAnswer}
                                   </span>
