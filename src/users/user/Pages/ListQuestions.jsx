@@ -370,7 +370,7 @@ const AddQuestionPopups = ({
   }, []);
 
   const handleChange = (e) => {
-    let punjabiArr = ["p_question", "p_wrongAnswer", "p_rightAnswer"];
+    let punjabiArr = [];
     if (punjabiArr.includes(e.target.name)) {
       setSubState({
         ...subState,
@@ -508,22 +508,42 @@ const AddQuestionPopups = ({
             </div>
             {subState.questionType === 1 && (
               <div className="punjabi-box">
-                <div className="simulator simulator-punjabi punjabi-font">
-                  <div className="question-row">{subState.p_question}</div>
+                <div className="simulator simulator-punjabi">
+                  <div className="question-row punjabi-font">
+                    {true
+                      ? subState.p_question
+                      : PunjabiFontConvertor.convert(
+                          subState.p_question,
+                          "AnmolLipi",
+                          "Arial Unicode MS"
+                        )}
+                  </div>
                   <div className="answer-row">
-                    <div className="left">
+                    <div className="left punjabi-font">
                       {subState.p_rightAnswer.length > 15 ? (
                         <marquee behavior="" direction="">
-                          {subState.p_rightAnswer}
+                          {true
+                            ? subState.p_rightAnswer
+                            : PunjabiFontConvertor.convert(
+                                subState.p_rightAnswer,
+                                "AnmolLipi",
+                                "Arial Unicode MS"
+                              )}
                         </marquee>
                       ) : (
                         subState.p_rightAnswer
                       )}
                     </div>
-                    <div className="right">
+                    <div className="right punjabi-font">
                       {subState.p_wrongAnswer.length > 15 ? (
                         <marquee behavior="" direction="">
-                          {subState.p_wrongAnswer}
+                          {true
+                            ? subState.p_wrongAnswer
+                            : PunjabiFontConvertor.convert(
+                                subState.p_wrongAnswer,
+                                "AnmolLipi",
+                                "Arial Unicode MS"
+                              )}
                         </marquee>
                       ) : (
                         subState.p_wrongAnswer
@@ -548,7 +568,7 @@ const AddQuestionPopups = ({
                     name="p_rightAnswer"
                     value={subState.p_rightAnswer}
                     onChange={handleChange}
-                    className="punjabi-font"
+                    // className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-input wrong">
@@ -558,7 +578,7 @@ const AddQuestionPopups = ({
                     name="p_wrongAnswer"
                     value={subState.p_wrongAnswer}
                     onChange={handleChange}
-                    className="punjabi-font"
+                    // className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-button">
