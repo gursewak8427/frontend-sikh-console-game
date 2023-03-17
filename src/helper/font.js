@@ -1455,3 +1455,5 @@ var PunjabiFontConvertor;
         return c;
     }
 })(PunjabiFontConvertor || (PunjabiFontConvertor = {}));
+
+module.exports = { PunjabiFontConvertor };
