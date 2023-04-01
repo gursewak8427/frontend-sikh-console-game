@@ -545,7 +545,7 @@ const AddQuestionPopups = ({
                         </marquee>
                       ) : (
                         PunjabiFontConvertor.convert(
-                          subState.p_wrongAnswer,
+                          subState.p_rightAnswer,
                           "AnmolLipi",
                           "Arial Unicode MS"
                         )
