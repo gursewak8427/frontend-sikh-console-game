@@ -1419,21 +1419,6 @@ var PunjabiFontConvertor;
         mapperConfig.mapper["”"] = "\\\"";  // extended quote
         mapperConfig.mapper["“"] = "\\\"";  // extended quote 
 
-
-
-        
-        
-
-
-
-
-
-
-        
-        
-
-
-		
 		console.log("b",mapperConfig);
         return Convertor.convertStringUsingMapper(mapperConfig, str);
     }

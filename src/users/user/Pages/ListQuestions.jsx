@@ -70,7 +70,7 @@ const ListQuestions = () => {
         axios
           .post(
             process.env.REACT_APP_NODE_URL +
-              "/question/findQuestionsAccordingToQuery",
+            "/question/findQuestionsAccordingToQuery",
             {
               categoryId: res?.data?.details.user?.assigned_category_id[0]._id,
             },
@@ -106,7 +106,7 @@ const ListQuestions = () => {
     axios
       .post(
         process.env.REACT_APP_NODE_URL +
-          "/question/findQuestionsAccordingToQuery",
+        "/question/findQuestionsAccordingToQuery",
         data,
         config
       )
@@ -155,9 +155,8 @@ const ListQuestions = () => {
             {state.categoryList.map((category, index) => (
               <div
                 onClick={() => changeCategory(category, index)}
-                className={`category-box ${
-                  category._id == state.activeCategory._id && "active"
-                }`}
+                className={`category-box ${category._id == state.activeCategory._id && "active"
+                  }`}
                 style={{ background: colors[index % colors.length] }}
               >
                 {category.categoryName}
@@ -218,15 +217,14 @@ const ListQuestions = () => {
                             </span>
                           </td>
                           <td
-                            className={`${
-                              question.question_level == "EASY"
-                                ? "easy-color"
-                                : question.question_level == "MEDIUM"
+                            className={`${question.question_level == "EASY"
+                              ? "easy-color"
+                              : question.question_level == "MEDIUM"
                                 ? "medium-color"
                                 : question.question_level == "HARD"
-                                ? "hard-color"
-                                : "expert-color"
-                            }`}
+                                  ? "hard-color"
+                                  : "expert-color"
+                              }`}
                           >
                             {question.question_level}
                           </td>
@@ -356,8 +354,8 @@ const AddQuestionPopups = ({
       axios
         .get(
           process.env.REACT_APP_NODE_URL +
-            "/question/singleQuestionDetail/" +
-            questionId
+          "/question/singleQuestionDetail/" +
+          questionId
         )
         .then((res) => {
           console.log({ questionResponse: res });
@@ -469,7 +467,7 @@ const AddQuestionPopups = ({
         toast(
           <div
             className="notificationPopup"
-            // onClick={() => window.open(notification.url, "_blank")}
+          // onClick={() => window.open(notification.url, "_blank")}
           >
             <p>
               <b>
@@ -497,17 +495,15 @@ const AddQuestionPopups = ({
             <div className="top">
               <div className="left">
                 <div
-                  className={`language ${
-                    subState.questionType == 1 && "active"
-                  }`}
+                  className={`language ${subState.questionType == 1 && "active"
+                    }`}
                   onClick={() => setSubState({ ...subState, questionType: 1 })}
                 >
                   Punjabi
                 </div>
                 <div
-                  className={`language ${
-                    subState.questionType == 2 && "active"
-                  }`}
+                  className={`language ${subState.questionType == 2 && "active"
+                    }`}
                   onClick={() => setSubState({ ...subState, questionType: 2 })}
                 >
                   English
@@ -526,10 +522,10 @@ const AddQuestionPopups = ({
                     {false
                       ? subState.p_question
                       : PunjabiFontConvertor.convert(
-                          subState.p_question,
-                          "AnmolLipi",
-                          "Arial Unicode MS"
-                        )}
+                        subState.p_question,
+                        "AnmolLipi",
+                        "Arial Unicode MS"
+                      )}
                   </div>
                   <div className="answer-row">
                     <div className="left punjabi-font-please">
@@ -538,10 +534,10 @@ const AddQuestionPopups = ({
                           {false
                             ? subState.p_rightAnswer
                             : PunjabiFontConvertor.convert(
-                                subState.p_rightAnswer,
-                                "AnmolLipi",
-                                "Arial Unicode MS"
-                              )}
+                              subState.p_rightAnswer,
+                              "AnmolLipi",
+                              "Arial Unicode MS"
+                            )}
                         </marquee>
                       ) : (
                         PunjabiFontConvertor.convert(
@@ -557,10 +553,10 @@ const AddQuestionPopups = ({
                           {false
                             ? subState.p_wrongAnswer
                             : PunjabiFontConvertor.convert(
-                                subState.p_wrongAnswer,
-                                "AnmolLipi",
-                                "Arial Unicode MS"
-                              )}
+                              subState.p_wrongAnswer,
+                              "AnmolLipi",
+                              "Arial Unicode MS"
+                            )}
                         </marquee>
                       ) : (
                         PunjabiFontConvertor.convert(
@@ -589,7 +585,7 @@ const AddQuestionPopups = ({
                     name="p_rightAnswer"
                     value={subState.p_rightAnswer}
                     onChange={handleChange}
-                    // className="punjabi-font"
+                  // className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-input wrong">
@@ -599,7 +595,7 @@ const AddQuestionPopups = ({
                     name="p_wrongAnswer"
                     value={subState.p_wrongAnswer}
                     onChange={handleChange}
-                    // className="punjabi-font"
+                  // className="punjabi-font"
                   />
                 </div>
                 <div className="add-question-popup-button">
@@ -608,15 +604,14 @@ const AddQuestionPopups = ({
                       <select
                         name="question_level"
                         id="question_level"
-                        className={`border-2 border-black rounded p-2 mr-10 ${
-                          subState.question_level == "EASY"
-                            ? "easy-color"
-                            : subState.question_level == "MEDIUM"
+                        className={`border-2 border-black rounded p-2 mr-10 ${subState.question_level == "EASY"
+                          ? "easy-color"
+                          : subState.question_level == "MEDIUM"
                             ? "medium-color"
                             : subState.question_level == "HARD"
-                            ? "hard-color"
-                            : "expert-color"
-                        }`}
+                              ? "hard-color"
+                              : "expert-color"
+                          }`}
                         onChange={handleChange}
                         value={subState.question_level}
                       >
@@ -645,15 +640,14 @@ const AddQuestionPopups = ({
                       <select
                         name="question_level"
                         id="question_level"
-                        className={`border-2 border-black rounded p-2 mr-10 ${
-                          subState.question_level == "EASY"
-                            ? "easy-color"
-                            : subState.question_level == "MEDIUM"
+                        className={`border-2 border-black rounded p-2 mr-10 ${subState.question_level == "EASY"
+                          ? "easy-color"
+                          : subState.question_level == "MEDIUM"
                             ? "medium-color"
                             : subState.question_level == "HARD"
-                            ? "hard-color"
-                            : "expert-color"
-                        }`}
+                              ? "hard-color"
+                              : "expert-color"
+                          }`}
                         onChange={handleChange}
                         value={subState.question_level}
                       >
@@ -739,15 +733,14 @@ const AddQuestionPopups = ({
                       <select
                         name="question_level"
                         id="question_level"
-                        className={`border-2 border-black rounded p-2 mr-10 ${
-                          subState.question_level == "EASY"
-                            ? "easy-color"
-                            : subState.question_level == "MEDIUM"
+                        className={`border-2 border-black rounded p-2 mr-10 ${subState.question_level == "EASY"
+                          ? "easy-color"
+                          : subState.question_level == "MEDIUM"
                             ? "medium-color"
                             : subState.question_level == "HARD"
-                            ? "hard-color"
-                            : "expert-color"
-                        }`}
+                              ? "hard-color"
+                              : "expert-color"
+                          }`}
                         onChange={handleChange}
                         value={subState.question_level}
                       >
@@ -776,15 +769,14 @@ const AddQuestionPopups = ({
                       <select
                         name="question_level"
                         id="question_level"
-                        className={`border-2 border-black rounded p-2 mr-10 ${
-                          subState.question_level == "EASY"
-                            ? "easy-color"
-                            : subState.question_level == "MEDIUM"
+                        className={`border-2 border-black rounded p-2 mr-10 ${subState.question_level == "EASY"
+                          ? "easy-color"
+                          : subState.question_level == "MEDIUM"
                             ? "medium-color"
                             : subState.question_level == "HARD"
-                            ? "hard-color"
-                            : "expert-color"
-                        }`}
+                              ? "hard-color"
+                              : "expert-color"
+                          }`}
                         onChange={handleChange}
                         value={subState.question_level}
                       >
