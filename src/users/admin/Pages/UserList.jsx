@@ -4,8 +4,10 @@ import ReactPaginate from "react-paginate";
 import { Navigate, redirect } from "react-router-dom";
 import { authenticate, getToken } from "../../../helper/auth";
 import Dashboard from "../Screens/Dashboard/Dashboard";
+import { MultiSelect } from "react-multi-select-component";
 
 const UserList = () => {
+    const [selected, setSelected] = useState([]);
     const [state, setState] = useState({
         isWaiting: false,
         list: [],
@@ -15,27 +17,33 @@ const UserList = () => {
         isPermissionPopupActive: false,
         activeUser: false,
         tempPermissions: [],
+        categoriesList: []
     })
+    const [isUpdateUser, setUpdateUser] = useState(-1)
+    const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
         getPaginationData(1);
     }, [])
 
-    const getPaginationData = (page) => {
+    const getPaginationData = async (page) => {
         const config = { headers: { "Authorization": `Bearer ${state.adminToken}` } }
         let data = { currentPage: page }
-        axios.post(process.env.REACT_APP_NODE_URL + "/user/get", data, config).then(res => {
-            console.log(res)
-            setState({
-                ...state,
-                list: res.data.details.users,
-                totalPages: res.data.details.totalPages,
-                currentPage: res.data.details.currentPage,
-                isWaiting: false,
-            })
-        }).catch(err => {
-            console.log(err.response.data)
+        let res = await axios.post(process.env.REACT_APP_NODE_URL + "/user/get", data, config)
+        let res2 = await axios.post(
+            process.env.REACT_APP_NODE_URL + "/category/getCategories",
+            data,
+            config
+        )
+        setState({
+            ...state,
+            list: res.data.details.users,
+            totalPages: res.data.details.totalPages,
+            currentPage: res.data.details.currentPage,
+            categoriesList: res2.data.details.categories,
+            isWaiting: false,
         })
+
     }
 
     const togglePermission = (e) => {
@@ -63,6 +71,25 @@ const UserList = () => {
             alert(res.data.message)
         }).catch(err => {
             console.log(err.response.data)
+        })
+    }
+
+    const updateUserNow = () => {
+        var data = {
+            userId: state.list[isUpdateUser]._id,
+            assigned_category_id: selected
+        }
+        setLoading(true)
+        const config = { headers: { "Authorization": `Bearer ${state.adminToken}` } }
+        axios.patch(process.env.REACT_APP_NODE_URL + "/user/update", data, config).then(res => {
+            console.log({ res })
+            alert(res.data.message)
+            setUpdateUser(-1)
+            setSelected([])
+            setLoading(false)
+        }).catch(err => {
+            console.log(err.response.data)
+            setLoading(false)
         })
     }
 
@@ -192,6 +219,37 @@ const UserList = () => {
                         </div>
                     }
 
+                    {
+                        isUpdateUser != -1 && <div className="popup permissions">
+                            <div style={{ padding: 20 }}>
+                                <h2 className="flex justify-between items-center">
+                                    <span>Assigned Categories List</span>
+                                    <button onClick={() => {
+                                        setUpdateUser(-1)
+                                        setSelected(-1)
+                                    }} className="text-[20px] m-2 py-1 px-4 rounded hover:bg-[#991b1b] bg-[#dc2626]">Close</button>
+                                </h2>
+                                <b><p style={{ marginTop: 10, textTransform: "capitalize" }}>Name : {state.list[isUpdateUser].first_name} {state.list[isUpdateUser].last_name}</p></b>
+                                <MultiSelect
+                                    options={state.categoriesList.map((category) => {
+                                        return {
+                                            value: category._id,
+                                            label: category.categoryName,
+                                        };
+                                    })}
+                                    value={selected}
+                                    onChange={setSelected}
+                                    labelledBy="Select"
+                                />
+                                <button className="float-right mb-10 m-2 py-2 px-5 bg-[#2a276b] hover:bg-[#2a266bb4] text-white rounded-full" disabled={isLoading} onClick={isLoading ? null : updateUserNow}>
+                                    {
+                                        isLoading ? "Loading..." : "Update"
+                                    }
+                                </button>
+                            </div>
+                        </div>
+                    }
+
                     <div className="w-full">
                         <div className="w-full">
                             <div className="w-full">
@@ -200,11 +258,10 @@ const UserList = () => {
                                         <table className="table w-full mb-0">
                                             <thead>
                                                 <tr className="bg-[#cbd5e1]">
-                                                    <th className="p-2 ">Id</th>
-                                                    <th className="p-2 ">Name</th>
-                                                    <th className="p-2 text-center ">Email</th>
-                                                    <th className="p-2 text-center ">Created</th>
-                                                    <th className="p-2 text-secondary opacity-7" />
+                                                    <th className="p-2">Id</th>
+                                                    <th className="p-2">Name</th>
+                                                    <th className="p-2 text-center">Email</th>
+                                                    <th className="p-2 text-center align-middle">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -226,9 +283,25 @@ const UserList = () => {
                                                                 <span className="badge badge-sm bg-gradient-success">{student.email}</span>
                                                             </td>
                                                             <td className="p-2 align-middle text-center">
-                                                                <span className="text-secondary text-xs font-weight-bold">{student?.created || ""}</span>
+                                                                {/* <span className="text-secondary text-xs font-weight-bold">{student?.created || ""}</span> */}
+                                                                <button
+                                                                    className="float-right py-2 px-5 bg-[#2a276b] hover:bg-[#2a266bb4] text-white rounded-full"
+                                                                    onClick={() => {
+                                                                        setUpdateUser(index)
+
+                                                                        console.log({ student })
+                                                                        let d = student?.assigned_category_id?.map((category) => {
+                                                                            return {
+                                                                                value: category._id,
+                                                                                label: category.categoryName,
+                                                                            };
+                                                                        })
+                                                                        console.log({ d })
+
+                                                                        setSelected([...d])
+                                                                    }}>Update</button>
                                                             </td>
-                                                            <td className="p-2 align-middle">
+                                                            {/* <td className="p-2 align-middle">
                                                                 <span className="text-[#2a276b] font-bolder cursor-pointer" onClick={() => {
                                                                     setState({
                                                                         ...state,
@@ -239,7 +312,7 @@ const UserList = () => {
                                                                 }}>
                                                                     Permissions
                                                                 </span>
-                                                            </td>
+                                                            </td> */}
                                                         </tr>
                                                     })
                                                 }
@@ -270,7 +343,7 @@ const UserList = () => {
                         </div>
                     </div>
                 </>
-            </div>
+            </div >
         </>
     )
 }
