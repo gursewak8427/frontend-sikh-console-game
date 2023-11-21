@@ -28,7 +28,7 @@ const UserList = () => {
 
     const getPaginationData = async (page) => {
         const config = { headers: { "Authorization": `Bearer ${state.adminToken}` } }
-        let data = { currentPage: page }
+        let data = { currentPage: page, perPage: 100, }
         let res = await axios.post(process.env.REACT_APP_NODE_URL + "/user/get", data, config)
         let res2 = await axios.post(
             process.env.REACT_APP_NODE_URL + "/category/getCategories",
