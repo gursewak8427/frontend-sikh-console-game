@@ -31,7 +31,7 @@ const CategoryManage = () => {
         getPaginationData(1);
     }, [])
     const getPaginationData = (page) => {
-        let data = { currentPage: page }
+        let data = { currentPage: page, perPage: 100, }
 
         axios
             .post(process.env.REACT_APP_NODE_URL + "/category/getCategories", data, config).then(response => {
@@ -64,7 +64,7 @@ const CategoryManage = () => {
 
     const uploadData = async () => {
         try {
-            if(state.categoryLogo == "" || state.categoryName == ""){
+            if (state.categoryLogo == "" || state.categoryName == "") {
                 alert("All fields are required")
                 return;
             }
